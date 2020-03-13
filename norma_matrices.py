@@ -5,28 +5,11 @@ numpy.set_printoptions(threshold=numpy.nan)
 
 def suma_columnas(A):
     # devuelve un vector con la suma de cada columna
-    sumas = []
-    for j in range(A.shape[1]):
-        valor = 0
-        for i in range(A.shape[0]):
-            valor += A[i, j]
-        sumas.append(valor)
-    return sumas
+    return suma_filas(A.transpose())
 
 
 def suma_filas(A):
-    return suma_columnas(A.transpose())
-
-
-def abs_matrix(A):
-    # devuelve una matriz con los valores absolutos de A
-    rows = A.shape[0]
-    cols = A.shape[1]
-    abs_A = numpy.zeros(shape=A.shape)
-    for i in range(rows):
-        for j in range(cols):
-            abs_A[i, j] = abs(A[i, j])
-    return abs_A
+    return list(map(lambda x: numpy.sum(x), A))
 
 
 def busca_col_maxima(A):
@@ -46,12 +29,6 @@ def norma_1(A):
 
 def norma_inf(A):
     return norma_1(A.transpose())
-
-
-A = numpy.array([[1, 2, 3, -4, 4], [-4, 5, -6, -7, 7],
-                 [-8, 9, -9, 5, 8], [7, 9, 10, 8, -5]])
-abs_A = abs_matrix(A)
-long_vectores_e = A.shape[1]
 
 
 def signum(numero):
@@ -81,14 +58,29 @@ def vectores_norma_inf_alcanzada(A):
     return vectores_norma_alcanzada
 
 
-print(A)
+def abs_matrix(A):
+    # devuelve una matriz con los valores absolutos de A
+    rows = A.shape[0]
+    cols = A.shape[1]
+    abs_A = numpy.zeros(shape=A.shape)
+    for i in range(rows):
+        for j in range(cols):
+            abs_A[i, j] = abs(A[i, j])
+    return abs_A
 
-print(suma_filas(abs_A))
 
-print(busca_fila_maxima(abs_A))
+def matriz_absoluta(A):
+    return numpy.array(list(map(lambda x: list(map(lambda y: abs(y), x)), A)))
 
-print(vectores_norma_inf_alcanzada(A))
 
+A = numpy.array([[1, 2, 3, -4, 4], [-4, 5, -6, -7, 7],
+                 [-8, 9, -9, 5, 8], [7, 9, 10, 8, -5]])
+
+
+abs_A = abs_matrix(A)
+abs_A1 = matriz_absoluta(A)
+print(abs_A)
+print(abs_A1)
 
 # print(norma_inf(A))
 # print(numpy.linalg.norm(A, ord=numpy.inf))
